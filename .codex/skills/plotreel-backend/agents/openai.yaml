@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plotreel Backend"
+  short_description: "Work confidently in the Plotreel Express backend."
+  default_prompt: "Use the Plotreel backend skill to implement or review API routes, controllers, validation, middleware, and local run workflows in this project."

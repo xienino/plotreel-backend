@@ -1,0 +1,11 @@
+POST http://127.0.0.1:47845/videomaker/aihost/getMtk
+Content-Type: application/json
+Authorization: Bearer test-token
+
+{}
+
+# POST http://127.0.0.1:47845/pnt/api/upgrade/last
+# Content-Type: application/json
+# Authorization: Bearer test-token
+
+# {}
