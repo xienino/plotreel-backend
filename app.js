@@ -10,7 +10,7 @@ const authMiddleware = require('./middlewares/auth.middleware');
 
 const app = express();
 
-// 连接 MongoDB 数据库
+// 连接 MySQL 数据库
 connectDB();
 
 // 解析 JSON 请求体

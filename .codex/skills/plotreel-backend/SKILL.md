@@ -1,6 +1,6 @@
 ---
 name: plotreel-backend
-description: Work on the Plotreel backend Node.js/Express project. Use when implementing or reviewing API routes, controllers, Joi validators, middleware, MongoDB configuration, response/error handling, local run commands, or frontend integration endpoints in the plotreel-backend repository.
+description: Work on the Plotreel backend Node.js/Express project. Use when implementing or reviewing API routes, controllers, Joi validators, middleware, MySQL configuration, response/error handling, local run commands, or frontend integration endpoints in the plotreel-backend repository.
 ---
 
 # Plotreel Backend
@@ -17,7 +17,7 @@ description: Work on the Plotreel backend Node.js/Express project. Use when impl
 ## Project Map
 
 - Entry point: `server.js` listens on `127.0.0.1:${config.port}`; default port is `47845`.
-- App setup: `app.js` connects MongoDB, installs JSON/body parsing, morgan, CORS, response middleware, route mounts, and final error middleware.
+- App setup: `app.js` connects MySQL, installs JSON/body parsing, morgan, CORS, response middleware, route mounts, and final error middleware.
 - Route mounts:
   - `/pnt/api/upgrade` -> `routes/upgrade.route.js`
   - `/videomaker/aihost` -> `routes/aihost.route.js`
@@ -63,4 +63,4 @@ Only add `validate(...)` when the endpoint actually needs request-body validatio
 - Use `npm run dev` for local development (`NODE_ENV=dev nodemon server.js`).
 - Use `npm start` for a plain Node start.
 - Check endpoint examples in `test.http` when validating manually.
-- If running the server fails because `MONGO_URI` is absent or MongoDB is unavailable, report that clearly instead of masking the startup failure.
+- If running the server fails because MySQL is unavailable or the database credentials are wrong, report that clearly instead of masking the startup failure.

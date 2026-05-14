@@ -7,10 +7,25 @@ module.exports = (req, res, next) => {
   const originalJson = res.json.bind(res);
 
   // 覆盖 res.json，统一返回格式
-  res.json = (payload) => {
+  res.json = (payload = {}) => {
+    const code = payload.code ?? (payload.resCode === 1 ? 200 : payload.resCode) ?? 200;
+    const resCode = payload.resCode ?? (code === 200 ? 1 : 0);
+    const data = payload.data ?? (payload.resData !== undefined ? { resData: payload.resData } : {});
+    const resData = payload.resData ?? data.resData ?? data;
+    const {
+      code: _code,
+      resCode: _resCode,
+      data: _data,
+      resData: _resData,
+      resMsg: _resMsg,
+      ...extra
+    } = payload;
     const response = {
-      code: payload.code ?? 200,
-      data: payload.data ?? {},
+      ...extra,
+      code,
+      resCode,
+      data,
+      resData,
       resMsg: payload.resMsg ?? []
     };
     // 待改为：{

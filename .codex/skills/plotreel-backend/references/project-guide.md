@@ -2,7 +2,7 @@
 
 ## Runtime
 
-- Stack: Node.js, Express 4, CommonJS modules, Joi, Mongoose, JWT, morgan, cors, dotenv.
+- Stack: Node.js, Express 4, CommonJS modules, Joi, MySQL, JWT, morgan, cors, dotenv.
 - Default server address: `http://127.0.0.1:47845`.
 - Config file selection: `config/index.js` reads `.env.${NODE_ENV || 'dev'}`.
 - Common scripts:
@@ -144,8 +144,18 @@ Authorization: Bearer test-token
 {}
 ```
 
+## Database
+
+- `config/db.js` uses the `mysql2` package and exports both `connectDB` and `db`.
+- Default MySQL config in `config/index.js`:
+  - `host`: `127.0.0.1`
+  - `port`: `3306`
+  - `user`: `root`
+  - `password`: `123456`
+  - `database`: `web_user_db`
+- Environment overrides are available through `MYSQL_HOST`, `MYSQL_PORT`, `MYSQL_USER`, `MYSQL_PASSWORD`, and `MYSQL_DATABASE`.
+
 ## Local Cautions
 
-- `app.js` calls `connectDB()` at app initialization; running the server requires a valid `MONGO_URI`.
-- `controllers/upgrade.controller.js` currently contains a bare `debugger` statement. Treat it as existing project state; remove it only when doing cleanup or when it affects the requested task.
+- `app.js` calls `connectDB()` at app initialization; running the server requires a reachable MySQL service and valid credentials.
 - This directory may not be a git repository. Check `git status` before relying on git workflows.

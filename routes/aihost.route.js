@@ -2,7 +2,81 @@ const express = require('express');
 const router = express.Router();
 const aihostController = require('../controllers/aihost.controller');
 
-// POST /videomaker/aihost/getMtk
-router.post('/getMtk', aihostController.getMtk);
+const postEndpoints = [
+  'getPaintingStyle',
+  'getBackgroundMusicList',
+  'setProjectBackgroundMusic',
+  'getMtk',
+  'setMtk',
+  'fileParse',
+  'uploadExampleImage',
+  'deleteExampleImage',
+  'createProject',
+  'getProjectDetail',
+  'contentExtract',
+  'editRepaintingCount',
+  'setFileContent',
+  'getProjectList',
+  'analyzeScence',
+  'analyzeAndGenimage',
+  'stopTaskAnalyzeAndGenimage',
+  'getAnalyzeAndGenimageProgress',
+  'getVoiceList',
+  'generateAudio',
+  'generateImage',
+  'getPicByIndexes',
+  'makeVideo',
+  'saveStoryboardAudio',
+  'exportJianyingDraft',
+  'copyVideo',
+  'getMakeVideoProgress',
+  'getExportProgress',
+  'seekVideo',
+  'getAnscenceProcess',
+  'getGenImageProcess',
+  'deleteMediumShooting',
+  'addMediumShooting',
+  'deleteProject',
+  'deleteVideo',
+  'deleteJianyingDraft',
+  'editProjectBasicInformation',
+  'getLabel',
+  'searchLabel',
+  'translators',
+  'setLabel',
+  'delLabel',
+  'getDefaultPrompt',
+  'generateLabelImage',
+  'findLabelImage',
+  'getCloudModelList',
+  'getSdConfig',
+  'getTranslateConfig',
+  'saveTranslateSecret',
+  'getShootingPath',
+  'getJianyingConfig',
+  'saveJianyingAddress',
+  'setSdConfig',
+  'changeLocalSdApiState',
+  'getVideoList',
+  'extractRoleLabels',
+  'stopAnalyzeScence',
+  'stopGenerateImage',
+  'openFolder',
+  'saveLabelImage',
+  'saveStoryboardImage',
+  'saveStoryboardVideo',
+  'getPaintingApiState',
+  'connectSd',
+  'setCloudModel',
+  'generateSdImageSynchronous',
+  'updater',
+  'updaterCheck'
+];
+
+postEndpoints.forEach((endpoint) => {
+  router.post(`/${endpoint}`, aihostController[endpoint]);
+});
+
+router.get('/checkUpdateProgress', aihostController.checkUpdateProgress);
 
 module.exports = router;
