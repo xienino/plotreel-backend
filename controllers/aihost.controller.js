@@ -1,4 +1,5 @@
 const successMsg = [{ msgCode: 'success', msgText: 'success' }];
+let localMtk = {};
 
 const nowTaskId = () => `task_${Date.now()}`;
 
@@ -51,12 +52,19 @@ exports.getBackgroundMusicList = asyncHandler(async (req, res) => ok(res, []));
 exports.setProjectBackgroundMusic = asyncHandler(async (req, res) => ok(res));
 
 exports.getMtk = asyncHandler(async (req, res) => ok(res, {
-  password: 'example-password',
-  account: 'example-account',
-  mtk: '1111example-mtk'
+  password: localMtk.password || '',
+  account: localMtk.account || '',
+  mtk: localMtk.mtk || ''
 }));
 
-exports.setMtk = asyncHandler(async (req, res) => ok(res));
+exports.setMtk = asyncHandler(async (req, res) => {
+  localMtk = {
+    mtk: req.body?.mtk || '',
+    account: req.body?.account || '',
+    password: req.body?.password || ''
+  };
+  return ok(res);
+});
 
 exports.fileParse = asyncHandler(async (req, res) => ok(res, {
   fileContent: ''

@@ -34,6 +34,8 @@ app.use(responseMiddleware);
 // app.use('/pnt/api', authMiddleware);
 
 // 路由挂载
+app.use('/adm/api', routes.admin);
+app.use('/pnt/api/user', routes.pntUser);
 app.use('/pnt/api/upgrade', routes.upgrade);
 app.use('/videomaker/aihost', routes.aihost);
 
