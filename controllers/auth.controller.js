@@ -66,6 +66,19 @@ const getVerifyRecord = ({ uuid, mobileNo, scene }) => {
   return record;
 };
 
+const getVerifyRecordByMobile = ({ mobileNo, scene }) => {
+  for (const [uuid, record] of verifyCodeStore.entries()) {
+    if (record.expiresAt < Date.now()) {
+      verifyCodeStore.delete(uuid);
+      continue;
+    }
+    if (record.mobileNo !== mobileNo) continue;
+    if (scene && record.scene !== scene) continue;
+    return { uuid, record };
+  }
+  return null;
+};
+
 exports.sendVerifyCode = asyncHandler(async (req, res) => {
   const mobileNo = normalizeMobile(req.body?.mobileNo);
   const scene = req.body?.scene || 'login';
@@ -183,15 +196,14 @@ exports.loginByVcode = asyncHandler(async (req, res) => {
 exports.resetPwd = asyncHandler(async (req, res) => {
   const mobileNo = normalizeMobile(req.body?.mobileNo);
   const verifyCode = req.body?.verifyCode;
-  const uuid = req.body?.uuid;
   const pwd = req.body?.pwd;
 
   if (!mobileNo) return fail(res, '请输入手机号', '10004');
-  if (!uuid || !verifyCode) return fail(res, '请输入验证码', '10004');
+  if (!verifyCode) return fail(res, '请输入验证码', '10004');
   if (!pwd) return fail(res, '请输入新密码', '10004');
 
-  const verifyRecord = getVerifyRecord({ uuid, mobileNo, scene: 'reset' });
-  if (!verifyRecord || verifyRecord.verifyCode !== String(verifyCode)) {
+  const verifyRecord = getVerifyRecordByMobile({ mobileNo, scene: 'reset' });
+  if (!verifyRecord || verifyRecord.record.verifyCode !== String(verifyCode)) {
     return fail(res, '验证码错误或已过期', '10004');
   }
 
@@ -204,7 +216,7 @@ exports.resetPwd = asyncHandler(async (req, res) => {
     passwordHash: hashPassword(pwd),
     token: mtk
   });
-  verifyCodeStore.delete(uuid);
+  verifyCodeStore.delete(verifyRecord.uuid);
 
   return ok(res, {
     mtk,
